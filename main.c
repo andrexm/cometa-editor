@@ -1,3 +1,4 @@
+#include <ctype.h>
 #include <ncurses.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -25,21 +26,20 @@ void stopColorGreen() {
 
 void initEditor() {
   editor_info.opened_files_amount = 0;
-  colorGreen();
-}
-
-int main() {
-  char c;
-
   initscr();
   noecho();
   raw();
   keypad(stdscr, true);
   refresh();
+  timeout(10);
+  colorGreen();
+  clear();
+}
+
+int main() {
+  char c;
 
   initEditor();
-  clear();
-
   if (!openFile("t.txt")) {
     printw("error while reading file!");
     getch();
