@@ -58,3 +58,10 @@ void closeFiles() {
     refresh();
   }
 }
+
+// clear the specified line
+void clearLine(int line, struct opened_file *ofp) {
+  move(line, 0);
+  clrtoeol();
+  ofp->lines[line] = "";
+}
