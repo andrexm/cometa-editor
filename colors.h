@@ -68,9 +68,8 @@ bool isSpecial(char c) {
 }
 
 void printWithColor(char line[5000], WINDOW *win) {
-  int charCount = 0, keyCount = 0;
+  int charCount = 0;
   char buff[50]; // temp keyword
-  int buffCount = 0;
   bool isComment = false;
   for (; charCount <= strlen(line); charCount++) {
     // start a comment
