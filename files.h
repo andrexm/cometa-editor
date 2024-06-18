@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <ncurses.h>
 
+#include "colors.h"
 #include "config.h"
 
 // read a file and save it on the opened struct
@@ -25,7 +26,10 @@ bool openFile(char *filename) {
   // how many lines the file has?
   while (fgets(line, sizeof(char) * MAX_LINE_SIZE, file)) {
     // print lines on visible area <2 is the status bar and command bar at the bottom>
-    if ((c + 2) <= win_info.height) wprintw(code_panel.win, "%s", line);
+    if ((c + 2) <= win_info.height) {
+      printWithColor(line, code_panel.win);  
+      //wprintw(code_panel.win, "%s", line);
+    }
     opened_file.lines[c] = line; // add each line to the buffer
     c++;
   }

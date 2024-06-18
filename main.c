@@ -3,6 +3,7 @@
 #include <stdlib.h>
 
 #include "config.h"
+#include "colors.h"
 #include "files.h"
 #include "panels.h"
 
@@ -12,17 +13,6 @@ void die(char *msg) {
   exit(1);
 }
 
-
-void colorGreen() {
-  start_color();
-  init_pair(1, COLOR_GREEN, COLOR_BLACK);
-  attron(COLOR_PAIR(1));
-}
-
-void stopColorGreen() {
-  attroff(COLOR_PAIR(1));
-}
-
 void initEditor() {
   editor_info.opened_files_amount = 0;
   initscr();
@@ -30,8 +20,6 @@ void initEditor() {
   raw();
   keypad(stdscr, true);
   timeout(10);
-  colorGreen();
-  clear();
   getmaxyx(stdscr, win_info.height, win_info.width);
   refresh();
 }
@@ -47,6 +35,9 @@ int main() {
   initEditor();
   startCodePanel();
   startLinesPanel();
+
+  // start after panels to apply
+  basicColors();
 
   if (!openFile("main.c")) {
     printw("error while reading file!");
