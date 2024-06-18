@@ -36,6 +36,11 @@ void initEditor() {
   refresh();
 }
 
+void closeEditor() {
+  closeFiles();
+  endwin();
+}
+
 int main() {
   char c;
 
@@ -53,9 +58,7 @@ int main() {
   while (1) {
     c = wgetch(code_panel.win);
     if (c == CTRL_KEY('q')) {
-      printw("closing?\r\n");
-      refresh();
-      closeFiles();
+      closeEditor();
       break;
     }
 
@@ -63,6 +66,4 @@ int main() {
       clearLine(0, &files[0]);
     }
   }
-
-  endwin();
 }
