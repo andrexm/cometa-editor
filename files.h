@@ -24,10 +24,12 @@ bool openFile(char *filename) {
 
   // how many lines the file has?
   while (fgets(line, sizeof(char) * MAX_LINE_SIZE, file)) {
-    printw("%s", line);
+    // print lines on visible area <2 is the status bar and command bar at the bottom>
+    if ((c + 2) <= win_info.height) wprintw(code_panel.win, "%s", line);
     opened_file.lines[c] = line; // add each line to the buffer
     c++;
   }
+  wrefresh(code_panel.win);
 
   opened_file.count_lines = c;
   opened_files++;
@@ -43,7 +45,7 @@ bool openFile(char *filename) {
 void showFile(struct opened_file *file) {
   int i = 0;
   while (i < file->count_lines) {
-    printw("%s\r\n", file->lines[i]);
+    wprintw(code_panel.win, "%s\r\n", file->lines[i]);
     i++;
   }
 }

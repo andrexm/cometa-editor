@@ -1,11 +1,10 @@
-#include <ctype.h>
 #include <ncurses.h>
 #include <stdio.h>
 #include <stdlib.h>
 
 #include "config.h"
 #include "files.h"
-
+#include "panels.h"
 
 // exit the program when an error is found
 void die(char *msg) {
@@ -30,24 +29,29 @@ void initEditor() {
   noecho();
   raw();
   keypad(stdscr, true);
-  refresh();
   timeout(10);
   colorGreen();
   clear();
+  getmaxyx(stdscr, win_info.height, win_info.width);
+  refresh();
 }
 
 int main() {
   char c;
 
   initEditor();
-  if (!openFile("t.txt")) {
+  startCodePanel();
+  startLinesPanel();
+
+  if (!openFile("main.c")) {
     printw("error while reading file!");
     getch();
     return 1;
   }
 
+  wmove(code_panel.win, 0, 0);
   while (1) {
-    c = getch();
+    c = wgetch(code_panel.win);
     if (c == CTRL_KEY('q')) {
       printw("closing?\r\n");
       refresh();

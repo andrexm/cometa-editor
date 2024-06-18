@@ -1,5 +1,6 @@
 #pragma once
 #include <stdio.h>
+#include <ncurses.h>
 
 /*
 * definitions about the program
@@ -32,3 +33,17 @@ struct editor_info editor_info;
 // array of opened files
 // the '+1' is used as an empty item to be copied when a file is closed
 struct opened_file files[FOPEN_MAX + 1];
+
+// panels
+struct panel {
+  WINDOW *win;
+  int width;
+  int height;
+} code_panel, lines_panel, status_panel, command_panel;
+
+// info about the terminal
+struct window_info{
+  int height;
+  int width;
+} win_info;
+
