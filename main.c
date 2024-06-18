@@ -39,7 +39,7 @@ int main() {
   // start after panels to apply
   basicColors();
 
-  if (!openFile("main.c")) {
+  if (!openFile("files.h")) {
     printw("error while reading file!");
     getch();
     return 1;
