@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "codepanel.h"
 #include "config.h"
 #include "colors.h"
 #include "files.h"
@@ -30,7 +31,7 @@ void closeEditor() {
 }
 
 int main() {
-  char c;
+  int c;
 
   initEditor();
   startCodePanel();
@@ -56,5 +57,10 @@ int main() {
     if (c == 'c') {
       clearLine(0, &files[0]);
     }
+
+    if (c == 'j' || c == KEY_DOWN) cursorMoveDown(code_panel.win);
+    if (c == 'k' || c == KEY_UP) cursorMoveUp(code_panel.win);
+    if (c == 'h' || c == KEY_LEFT) cursorMoveLeft(code_panel.win);
+    if (c == 'l' || c == KEY_RIGHT) cursorMoveRight(code_panel.win);
   }
 }

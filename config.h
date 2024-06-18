@@ -47,3 +47,13 @@ struct window_info{
   int width;
 } win_info;
 
+// cursor tracking
+struct cursor {
+  int y;
+  int x;
+  int previousy;
+  int previousx;
+  WINDOW *win;
+  WINDOW *previouswin;
+} cursor;
+

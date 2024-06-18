@@ -1,6 +1,7 @@
 #pragma once
 
 #include <math.h>
+#include <ncurses.h>
 
 #include "config.h"
 
@@ -31,5 +32,6 @@ void startCodePanel() {
   code_panel.win = code;
   code_panel.height = win_info.height - 2;
   code_panel.width= win_info.width - 6;
+  keypad(code_panel.win, true);
   wrefresh(code);
 }
