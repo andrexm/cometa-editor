@@ -1,0 +1,74 @@
+#pragma once 
+
+#include <ncurses.h>
+
+#include "codepanel.h"
+#include "config.h"
+#include "cursor.h"
+
+// basic hjkl movements
+bool basicMoves(int c) {
+  switch (c) {  
+    case 'j': // move down
+    case KEY_DOWN:
+      cursorMoveDown(code_panel.win);    
+      return true;
+      break;
+    case 'k': // move up
+    case KEY_UP:
+      cursorMoveUp(code_panel.win);
+      return true;
+      break;
+      
+    case 'h': // move left
+    case KEY_LEFT:
+      cursorMoveLeft(code_panel.win);
+      return true;
+      break;
+
+    case 'l': // move right
+    case KEY_RIGHT:
+      cursorMoveRight(code_panel.win);
+      return true;
+      break;
+  }
+  return false;
+}
+
+// movements involving the 'g' key
+bool goMoves(int c) {
+  if (c != 'g') return false;
+  c = wgetch(code_panel.win); // get the movement char
+
+  // TODO: implement whowing the tips panel
+
+  switch (c) {
+    case 'h': // start of line
+    case KEY_LEFT:
+      updateCursor(cursor.y, 0, code_panel.win);
+      return true;
+
+    case 'j': // end of window
+    case KEY_DOWN:
+      updateCursor(code_panel.height - 1, cursor.x, code_panel.win);
+      return true;
+
+    case 'k': // start of window
+    case KEY_UP:
+      updateCursor(0, cursor.x, code_panel.win);
+      return true;
+
+    case 'l': // end of line
+    case KEY_RIGHT:
+      updateCursor(cursor.y, code_panel.width - 2, code_panel.win);
+      return true;
+  }
+  return false;
+}
+
+bool movement(int c) {
+  if (basicMoves(c)) return true;
+  if (goMoves(c)) return true;
+
+  return false;
+}

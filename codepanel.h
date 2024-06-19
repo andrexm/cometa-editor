@@ -15,7 +15,7 @@ void cursorMoveDown(WINDOW *win) {
 }
 
 void cursorMoveRight(WINDOW *win) {
-  if (cursor.x == code_panel.width - 1) return;
+  if (cursor.x == code_panel.width - 2) return;
   updateCursor(cursor.y, cursor.x + 1, win);
 }
 

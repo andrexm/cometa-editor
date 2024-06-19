@@ -7,6 +7,7 @@
 #include "colors.h"
 #include "files.h"
 #include "panels.h"
+#include "movement.h"
 
 // exit the program when an error is found
 void die(char *msg) {
@@ -49,18 +50,12 @@ int main() {
   wmove(code_panel.win, 0, 0);
   while (1) {
     c = wgetch(code_panel.win);
-    if (c == CTRL_KEY('q')) {
-      closeEditor();
-      break;
-    }
 
-    if (c == 'c') {
-      clearLine(0, &files[0]);
+    if (movement(c)) continue;
+    switch (c) {
+      case CTRL_KEY('q'): // close program
+        closeEditor();
+        return 0;
     }
-
-    if (c == 'j' || c == KEY_DOWN) cursorMoveDown(code_panel.win);
-    if (c == 'k' || c == KEY_UP) cursorMoveUp(code_panel.win);
-    if (c == 'h' || c == KEY_LEFT) cursorMoveLeft(code_panel.win);
-    if (c == 'l' || c == KEY_RIGHT) cursorMoveRight(code_panel.win);
   }
 }
