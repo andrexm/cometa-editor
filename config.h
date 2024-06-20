@@ -16,9 +16,12 @@
 #define  CTRL_KEY(k) ((k) & (0x1f))
 
 // information about the text editor
-struct editor_info {
+static struct editor_info {
   int opened_files_amount;
-};
+  int active_file;
+  struct opened_file *opened_file;
+  char *active_filename;
+} editor_info;
 
 // information about the opened file
 struct opened_file {
@@ -28,27 +31,28 @@ struct opened_file {
   char *lines[MAX_LINES];
 };
 
-struct editor_info editor_info;
-
 // array of opened files
 // the '+1' is used as an empty item to be copied when a file is closed
-struct opened_file files[FOPEN_MAX + 1];
+static struct opened_file files[FOPEN_MAX + 1];
+
+// points to the active index on opened_files
+static int active_file = -1;
 
 // panels
-struct panel {
+static struct panel {
   WINDOW *win;
   int width;
   int height;
 } code_panel, lines_panel, status_panel, command_panel;
 
 // info about the terminal
-struct window_info{
+static struct window_info{
   int height;
   int width;
 } win_info;
 
 // cursor tracking
-struct cursor {
+static struct cursor {
   int y;
   int x;
   int previousy;

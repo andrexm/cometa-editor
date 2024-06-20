@@ -5,6 +5,7 @@
 #include "codepanel.h"
 #include "config.h"
 #include "cursor.h"
+#include "statuspanel.h"
 
 // basic hjkl movements
 bool basicMoves(int c) {
@@ -67,8 +68,10 @@ bool goMoves(int c) {
 }
 
 bool movement(int c) {
-  if (basicMoves(c)) return true;
-  if (goMoves(c)) return true;
+  if (basicMoves(c) || goMoves(c)) {
+    updateStatus();  
+    return true;
+}
 
   return false;
 }

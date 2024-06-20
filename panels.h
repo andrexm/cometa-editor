@@ -27,11 +27,20 @@ void startLinesPanel() {
 // draw the panel for showing file content
 void startCodePanel() {
   WINDOW *code = newwin(win_info.height - 2, win_info.width - 7, 0, 7);
-  box(code, 0, 0);
   wrefresh(code);
   code_panel.win = code;
   code_panel.height = win_info.height - 2;
   code_panel.width= win_info.width - 6;
   keypad(code_panel.win, true);
   wrefresh(code);
+}
+
+// draw the panel for showing the status bar
+void startStatusPanel() {
+  WINDOW *status = newwin(1, win_info.width, win_info.height - 2, 0);
+  status_panel.win = status;
+  status_panel.height = 1;
+  status_panel.width= win_info.width;
+  keypad(status_panel.win, true);
+  wrefresh(status);
 }

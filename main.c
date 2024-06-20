@@ -5,9 +5,11 @@
 #include "codepanel.h"
 #include "config.h"
 #include "colors.h"
+#include "cursor.h"
 #include "files.h"
 #include "panels.h"
 #include "movement.h"
+#include "statuspanel.h"
 
 // exit the program when an error is found
 void die(char *msg) {
@@ -35,6 +37,7 @@ int main() {
   int c;
 
   initEditor();
+  startStatusPanel();
   startCodePanel();
   startLinesPanel();
 
@@ -47,7 +50,7 @@ int main() {
     return 1;
   }
 
-  wmove(code_panel.win, 0, 0);
+  updateCursor(0, 0, code_panel.win);
   while (1) {
     c = wgetch(code_panel.win);
 

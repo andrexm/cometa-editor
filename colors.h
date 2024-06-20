@@ -15,6 +15,7 @@
 #define COLOR_SKY 14
 #define COLOR_EMERALD 15
 #define COLOR_GRAY2 16
+#define COLOR_BLACK3 17
 
 const char *KEYWORDS[] = {"int", "void", "char", "include", "while", "for", "if", "else", "return"};
 const char *test = "void";
@@ -28,6 +29,7 @@ void basicColors() {
   if (!has_colors()) return;
   start_color();
   init_color(COLOR_BLACK2, 100, 100, 100);
+  init_color(COLOR_BLACK3, 150, 150, 150);
   init_color(COLOR_WHITE2, 800, 800, 800);
   init_color(COLOR_GRAY, 392, 454, 545);
   init_color(COLOR_ORANGE, 984, 572, 235);
@@ -46,9 +48,11 @@ void basicColors() {
   init_pair(7, COLOR_COMMENT, COLOR_BLACK2);
   init_pair(8, COLOR_EMERALD, COLOR_BLACK2);
   init_pair(9, COLOR_GRAY2, COLOR_BLACK2);
+  init_pair(10, COLOR_WHITE, COLOR_BLACK3);
 
   wbkgd(code_panel.win, COLOR_PAIR(1));
   wbkgd(lines_panel.win, COLOR_PAIR(2));
+  wbkgd(status_panel.win, COLOR_PAIR(10));
   bkgd(COLOR_PAIR(2));
 
   refresh();

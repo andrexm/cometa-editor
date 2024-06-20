@@ -3,8 +3,10 @@
 #include <stdio.h>
 #include <ncurses.h>
 
-#include "colors.h"
 #include "config.h"
+#include "colors.h"
+#include "cursor.h"
+#include "statuspanel.h"
 
 // read a file and save it on the opened struct
 bool openFile(char *filename) {
@@ -33,15 +35,24 @@ bool openFile(char *filename) {
     opened_file.lines[c] = line; // add each line to the buffer
     c++;
   }
-  wrefresh(code_panel.win);
+  wrefresh(code_panel.win); // updated code panel
+
+  // update active file indicator
+  if (active_file == -1) {
+    active_file = 0;
+  } else { active_file++; }
 
   opened_file.count_lines = c;
   opened_files++;
   // add file struct to files array
   files[opened_files] = opened_file;
   editor_info.opened_files_amount++;
+  editor_info.opened_file = &opened_file;
+  editor_info.active_filename = filename;
+  updateStatus(); // update status bar
 
   refresh();
+  updateCursor(0, 0, code_panel.win);
   return true;
 }
 
