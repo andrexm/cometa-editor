@@ -39,7 +39,7 @@ void setStatus(char *filename) {
 
 void updateStatus() {
   char *name, *blank = "blank";
-  name = (active_file == -1) ? blank : editor_info.active_filename;
+  name = (editor_info.active_file == -1) ? blank : editor_info.active_filename;
   curs_set(0);
   setStatus(name);
   curs_set(1);

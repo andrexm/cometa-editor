@@ -38,9 +38,9 @@ bool openFile(char *filename) {
   wrefresh(code_panel.win); // updated code panel
 
   // update active file indicator
-  if (active_file == -1) {
-    active_file = 0;
-  } else { active_file++; }
+  if (editor_info.active_file == -1) {
+    editor_info.active_file = 0;
+  } else { editor_info.active_file++; }
 
   opened_file.count_lines = c;
   opened_files++;

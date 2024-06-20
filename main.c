@@ -44,6 +44,7 @@ int main() {
   // start after panels to apply
   basicColors();
 
+  editor_info.active_file = -1; // no opened files
   if (!openFile("files.h")) {
     printw("error while reading file!");
     getch();

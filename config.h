@@ -35,9 +35,6 @@ struct opened_file {
 // the '+1' is used as an empty item to be copied when a file is closed
 static struct opened_file files[FOPEN_MAX + 1];
 
-// points to the active index on opened_files
-static int active_file = -1;
-
 // panels
 static struct panel {
   WINDOW *win;
