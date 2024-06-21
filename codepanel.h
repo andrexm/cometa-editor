@@ -1,12 +1,14 @@
 #pragma once
 
+#include <stdio.h>
+#include <ncurses.h>
+
 #include "colors.h"
 #include "config.h"
 #include "cursor.h"
 #include "panels.h"
 #include "statuspanel.h"
-#include <stdio.h>
-#include <ncurses.h>
+#include "linespanel.h"
 
 void cursorMoveUp(WINDOW *win) {
   if (cursor.y == 0) return;
@@ -44,7 +46,7 @@ void cursorScrollDown() {
     linepos++;
   }
   editor_info.active_line++;
-  startLinesPanel(editor_info.active_line);
+  updateLinesPanel(editor_info.active_line);
   updateStatus();
 }
 

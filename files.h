@@ -8,6 +8,7 @@
 #include "colors.h"
 #include "cursor.h"
 #include "statuspanel.h"
+#include "linespanel.h"
 
 // TODO:
 // try creating an array of array of lines instead of saving each array of lines
@@ -46,6 +47,7 @@ bool openFile(char *filename) {
   showLines();
   wmove(code_panel.win, 0, 0);
   updateStatus();
+  updateLinesPanel(editor_info.active_line);
   return true;
 }
 

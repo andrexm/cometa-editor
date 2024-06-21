@@ -4,24 +4,20 @@
 #include <ncurses.h>
 
 #include "config.h"
+#include "linespanel.h"
 
 
 // draw the lines panel
-void startLinesPanel(int start_at) {
+void startLinesPanel() {
   WINDOW *lines = newwin(win_info.height, 7, 0, 0);
+  int start_at = 1;
   lines_panel.win = lines;
-  lines_panel.height = win_info.height;
+  lines_panel.height = win_info.height - 2;
   lines_panel.width = 7;
   wrefresh(lines);
 
   // draw numbers
-  int c = 1;
-  while (c <= lines_panel.height - 2) {
-    wmove(lines_panel.win, c - 1, lines_panel.width - (int)log10(c) - 3);
-    wprintw(lines_panel.win, "%d", start_at++);
-    c++;
-  }
-  wrefresh(lines_panel.win);
+  updateLinesPanel(1);
 }
 
 // draw the panel for showing file content
