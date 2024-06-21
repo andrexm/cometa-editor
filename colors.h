@@ -17,8 +17,11 @@
 #define COLOR_GRAY2 16
 #define COLOR_BLACK3 17
 
-const char *KEYWORDS[] = {"int", "void", "char", "include", "while", "for", "if", "else", "return"};
-const char *test = "void";
+const char *KEYWORDS[] = {"while", "volatile", "void", "unsigned", "union", "typedef", "switch",
+                          "struct", "static", "sizeof", "signed", "short", "return", "register",
+                          "long", "if", "goto", "for", "float", "extern", "enum", "else", "double",
+                          "do", "continue", "const", "case", "break", "auto", "int", "void", "char",
+                          "include", "while", "for", "if", "else", "return"};
 
 int selectedColor = 1;
 bool startStr = false;
