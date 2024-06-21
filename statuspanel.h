@@ -30,7 +30,7 @@ void setStatus(char *filename) {
 
   // print the numbers for line and column
   wmove(status_panel.win, 0, win_info.width - (length + 3));
-  wprintw(status_panel.win, "%d:%d", cursor.x + 1, cursor.y + 1);
+  wprintw(status_panel.win, "%d:%d", cursor.x + 1, cursor.y + editor_info.active_line);
 
   // go back to code panel and refresh status panel
   wmove(code_panel.win, cursor.y, cursor.x);

@@ -7,6 +7,7 @@
 #include "colors.h"
 #include "cursor.h"
 #include "files.h"
+#include "linespanel.h"
 #include "panels.h"
 #include "movement.h"
 #include "statuspanel.h"
@@ -31,19 +32,27 @@ void closeEditor() {
   endwin();
 }
 
-int main() {
+int main(int argv, char *argc[]) {
   int c;
 
   initEditor();
   startStatusPanel();
   startCodePanel();
-  startLinesPanel(0);
+  startLinesPanel();
 
   // start after panels to apply
   basicColors();
 
-  openFile("files.h");
-  updateCursor(0, 0, code_panel.win);
+  // open file or start a blank buffer
+  if (argc[1]) openFile(argc[1]);
+  else {
+    editor_info.lines_amount = 0;
+    editor_info.active_filename= "[blank]";
+    updateLinesPanel(1);
+    updateStatus();
+    wmove(code_panel.win, 0, 0);
+  }
+
   while (1) {
     c = wgetch(code_panel.win);
 
@@ -52,12 +61,6 @@ int main() {
       case CTRL_KEY('q'): // close program
         closeEditor();
         return 0;
-      case 'b':
-        cursorScrollDown();
-        break;
-      case 'B':
-        cursorScrollUp();
-        break;
     }
   }
 }
