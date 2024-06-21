@@ -18,7 +18,6 @@ void die(char *msg) {
 }
 
 void initEditor() {
-  editor_info.opened_files_amount = 0;
   initscr();
   noecho();
   raw();
@@ -29,7 +28,6 @@ void initEditor() {
 }
 
 void closeEditor() {
-  closeFiles();
   endwin();
 }
 
@@ -39,18 +37,13 @@ int main() {
   initEditor();
   startStatusPanel();
   startCodePanel();
-  startLinesPanel();
+  startLinesPanel(0);
 
   // start after panels to apply
   basicColors();
 
   editor_info.active_file = -1; // no opened files
-  if (!openFile("files.h")) {
-    printw("error while reading file!");
-    getch();
-    return 1;
-  }
-
+  openFile("files.h");
   updateCursor(0, 0, code_panel.win);
   while (1) {
     c = wgetch(code_panel.win);
@@ -60,6 +53,9 @@ int main() {
       case CTRL_KEY('q'): // close program
         closeEditor();
         return 0;
+      case 'b':
+        cursorScrollDown();
+        break;
     }
   }
 }

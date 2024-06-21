@@ -17,23 +17,13 @@
 
 // information about the text editor
 static struct editor_info {
-  int opened_files_amount;
+  int lines_amount;
   int active_file;
-  struct opened_file *opened_file;
+  int active_line;
+  FILE *opened_file;
   char *active_filename;
+  char lines[MAX_LINES][MAX_LINE_SIZE];
 } editor_info;
-
-// information about the opened file
-struct opened_file {
-  FILE *file;
-  char *name;
-  int count_lines;
-  char *lines[MAX_LINES];
-};
-
-// array of opened files
-// the '+1' is used as an empty item to be copied when a file is closed
-static struct opened_file files[FOPEN_MAX + 1];
 
 // panels
 static struct panel {
