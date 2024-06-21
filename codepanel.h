@@ -31,23 +31,23 @@ void cursorMoveLeft(WINDOW *win) {
 void cursorScrollDown() {
   int linepos = editor_info.active_line;
   int c = 0; // line on code panel
-  int lines = editor_info.lines_amount;
+  int lines_qty = editor_info.lines_amount;
 
-  //if (files[editor_info.active_file].count_lines <= linepos) return;
+  // scroll until the code finish at the middle of the screen
+  if (editor_info.active_line >= lines_qty - code_panel.height / 2) return;
+
   wclear(code_panel.win);
-  while (c <= code_panel.height && editor_info.active_line + code_panel.height >= c) {
-    // read each line saved in the array
-    char *line = editor_info.lines[c + editor_info.active_line]; // FIX: lines with }
+  while (c < code_panel.height && (linepos + code_panel.height) >= c) {
     wmove(code_panel.win, c, 0);
-    //wprintw(code_panel.win, "%s", line);
-    printWithColor(line, code_panel.win);
+    printWithColor(lines[linepos+1], code_panel.win);
     c++;
     linepos++;
   }
   editor_info.active_line++;
-  updateStatus();
   startLinesPanel(editor_info.active_line);
+  updateStatus();
 }
+
 void cursorScrollUp();
 void cursorScrollRight();
 void cursorScrollLeft();

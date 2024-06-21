@@ -15,6 +15,9 @@
 // return CTRL + X
 #define  CTRL_KEY(k) ((k) & (0x1f))
 
+// save the lines of the file
+char lines[MAX_LINES][MAX_LINE_SIZE];
+
 // information about the text editor
 static struct editor_info {
   int lines_amount;

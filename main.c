@@ -42,7 +42,6 @@ int main() {
   // start after panels to apply
   basicColors();
 
-  editor_info.active_file = -1; // no opened files
   openFile("files.h");
   updateCursor(0, 0, code_panel.win);
   while (1) {
