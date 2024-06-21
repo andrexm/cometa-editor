@@ -55,6 +55,9 @@ int main() {
       case 'b':
         cursorScrollDown();
         break;
+      case 'B':
+        cursorScrollUp();
+        break;
     }
   }
 }

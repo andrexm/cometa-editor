@@ -50,7 +50,26 @@ void cursorScrollDown() {
   updateStatus();
 }
 
-void cursorScrollUp();
+void cursorScrollUp() {
+  int linepos = editor_info.active_line;
+  int c = 0; // line on code panel
+  int lines_qty = editor_info.lines_amount;
+
+  // scroll until the code finish at the middle of the screen
+  if ((editor_info.active_line - 1) == 0) return;
+
+  wclear(code_panel.win);
+  while (c < code_panel.height) {
+    wmove(code_panel.win, c, 0);
+    printWithColor(lines[linepos], code_panel.win);
+    c++;
+    linepos++;
+  }
+  editor_info.active_line--;
+  updateLinesPanel(editor_info.active_line);
+  updateStatus();
+}
+
 void cursorScrollRight();
 void cursorScrollLeft();
 
