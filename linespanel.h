@@ -13,6 +13,8 @@ void updateLinesPanel(int start_at) {
   while (c <= lines_panel.height) {
     if (start_at <= editor_info.lines_amount) {
       // print numbers
+      wmove(lines_panel.win, c-1, 0);
+      wclrtoeol(lines_panel.win);
       wmove(lines_panel.win, c - 1, lines_panel.width - (int)log10(start_at) - 3);
       wprintw(lines_panel.win, "%d", start_at++);
     } else {
