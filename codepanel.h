@@ -99,3 +99,8 @@ void cursorOnBottomSide(WINDOW *win) {
   updateCursor(pos, cursor.x, win);
 }
 
+// position the cursor at the top side
+void cursorOnTopSite(WINDOW *win) {
+  updateCursor(0, cursor.x, code_panel.win);
+}
+

@@ -56,7 +56,7 @@ bool goMoves(int c) {
 
     case 'k': // start of window
     case KEY_UP:
-      updateCursor(0, cursor.x, code_panel.win);
+      cursorOnTopSite(code_panel.win);
       return true;
 
     case 'l': // end of line
