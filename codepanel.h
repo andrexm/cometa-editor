@@ -2,6 +2,7 @@
 
 #include <stdio.h>
 #include <ncurses.h>
+#include <string.h>
 
 #include "colors.h"
 #include "config.h"
@@ -107,5 +108,10 @@ void cursorOnTopSite(WINDOW *win) {
 // position the cursor at the left side
 void cursorOnLeftSide(WINDOW *win) {
   updateCursor(cursor.y, 0, code_panel.win);
+}
+
+void cursorOnRightSide(WINDOW *win) {
+  int linelen = strlen(lines[cursor.y + editor_info.active_line - 1]) - 1;
+  updateCursor(cursor.y, linelen, win);
 }
 

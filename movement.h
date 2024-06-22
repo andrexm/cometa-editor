@@ -61,7 +61,7 @@ bool goMoves(int c) {
 
     case 'l': // end of line
     case KEY_RIGHT:
-      updateCursor(cursor.y, code_panel.width - 2, code_panel.win);
+      cursorOnRightSide(code_panel.win);
       return true;
   }
   return false;
