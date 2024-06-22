@@ -104,3 +104,8 @@ void cursorOnTopSite(WINDOW *win) {
   updateCursor(0, cursor.x, code_panel.win);
 }
 
+// position the cursor at the left side
+void cursorOnLeftSide(WINDOW *win) {
+  updateCursor(cursor.y, 0, code_panel.win);
+}
+

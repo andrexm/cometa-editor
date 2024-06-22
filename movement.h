@@ -46,7 +46,7 @@ bool goMoves(int c) {
   switch (c) {
     case 'h': // start of line
     case KEY_LEFT:
-      updateCursor(cursor.y, 0, code_panel.win);
+      cursorOnLeftSide(code_panel.win);
       return true;
 
     case 'j': // end of window
