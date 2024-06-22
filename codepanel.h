@@ -68,6 +68,10 @@ void cursorMoveUp(WINDOW *win) {
 }
 
 void cursorMoveDown(WINDOW *win) {
+  // nothing happens at the end of the file
+  if ((cursor.y > editor_info.lines_amount - editor_info.active_line)) return;
+
+  // move down when there are more lines to show
   if (cursor.y == code_panel.height - 1) {
     cursorScrollDown();
     return;
@@ -83,5 +87,15 @@ void cursorMoveRight(WINDOW *win) {
 void cursorMoveLeft(WINDOW *win) {
   if (cursor.x == 0) return;
   updateCursor(cursor.y, cursor.x - 1, win);
+}
+
+// position the cursor at the bottom or the last line
+void cursorOnBottomSide(WINDOW *win) {
+  if (cursor.y > editor_info.lines_amount - editor_info.active_line) return;
+  // get the maximum position the cursor can go
+  int pos = editor_info.lines_amount - editor_info.active_line;
+  if (pos > code_panel.height) pos = code_panel.height - 1;
+  // then go down
+  updateCursor(pos, cursor.x, win);
 }
 

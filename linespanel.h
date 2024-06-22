@@ -4,6 +4,7 @@
 #include <ncurses.h>
 
 #include "config.h"
+#include "statuspanel.h"
 
 void updateLinesPanel(int start_at) {
   // draw numbers
@@ -26,4 +27,5 @@ void updateLinesPanel(int start_at) {
     c++;
   }
   wrefresh(lines_panel.win);
+  updateStatus();
 }
