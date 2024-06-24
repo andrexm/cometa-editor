@@ -26,7 +26,7 @@ void cursorScrollDown() {
   wclear(code_panel.win);
   while (c < code_panel.height && (linepos + code_panel.height) > c) {
     wmove(code_panel.win, c, 0);
-    printWithColor(lines[linepos+1], code_panel.win);
+    printWithColor(lines[linepos], code_panel.win);
     c++;
     linepos++;
   }
