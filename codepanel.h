@@ -11,6 +11,9 @@
 #include "statuspanel.h"
 #include "linespanel.h"
 
+// FIX: the two top lines go away after scrolling down and up!!!!!!!!!
+
+
 void cursorScrollDown() {
   int linepos = editor_info.active_line;
   int c = 0; // line on code panel
@@ -21,14 +24,14 @@ void cursorScrollDown() {
 
   curs_set(0);
   wclear(code_panel.win);
-  while (c < code_panel.height && (linepos + code_panel.height) >= c) {
+  while (c < code_panel.height && (linepos + code_panel.height) > c) {
     wmove(code_panel.win, c, 0);
     printWithColor(lines[linepos+1], code_panel.win);
     c++;
     linepos++;
   }
   curs_set(1);
-  editor_info.active_line++;
+  editor_info.active_line += 1;
   updateLinesPanel(editor_info.active_line);
   updateStatus();
 }
@@ -45,7 +48,7 @@ void cursorScrollUp() {
   wclear(code_panel.win);
   while (c < code_panel.height) {
     wmove(code_panel.win, c, 0);
-    printWithColor(lines[linepos], code_panel.win);
+    printWithColor(lines[linepos-2], code_panel.win);
     c++;
     linepos++;
   }
