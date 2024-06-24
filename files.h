@@ -14,6 +14,22 @@
 // try creating an array of array of lines instead of saving each array of lines
 // inside the opened_file struct
 
+// return the length of a given line in the file
+int getLineLen(int line) {
+  int len = strlen(lines[line]) - 1;
+  if (len < 0) len = 0;
+  return len;
+}
+
+// return the corresponding number of the above line, ex. '1' if the cursor is at second line
+int previousLineNumber() {
+  return cursor.y + editor_info.active_line - 1;
+}
+
+int nextLineNumber() {
+  return cursor.y + editor_info.active_line;
+}
+
 // when no file name is given
 void startEmptyBuffer() {
     editor_info.lines_amount = 1;
@@ -21,7 +37,7 @@ void startEmptyBuffer() {
     editor_info.active_filename = (char*)"[blank]";
     editor_info.buffer_type = EMPTY;
 
-    strcpy(editor_info.lines[0], "sdfasd");
+    strcpy(lines[0], "");
     
     updateLinesPanel(1);
     updateStatus();
