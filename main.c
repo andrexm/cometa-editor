@@ -45,14 +45,8 @@ int main(int argv, char *argc[]) {
 
   // open file or start a blank buffer
   if (argc[1]) openFile(argc[1]);
-  else {
-    editor_info.lines_amount = 0;
-    editor_info.active_filename= "[blank]";
-    updateLinesPanel(1);
-    updateStatus();
-    wmove(code_panel.win, 0, 0);
-  }
-
+  else startEmptyBuffer();
+  
   while (1) {
     c = wgetch(code_panel.win);
 

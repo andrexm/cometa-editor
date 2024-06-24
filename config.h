@@ -18,11 +18,18 @@
 // save the lines of the file
 char lines[MAX_LINES][MAX_LINE_SIZE];
 
+enum buffer_type {
+  EMPTY, // no filename given to the program
+  EXISTING_FILE, // filename given and file exists
+  EMPTY_FILE // filename given but create the file
+};
+
 // information about the text editor
 static struct editor_info {
   int lines_amount;
   int active_file;
   int active_line;
+  enum buffer_type buffer_type;
   FILE *opened_file;
   char *active_filename;
   char lines[MAX_LINES][MAX_LINE_SIZE];

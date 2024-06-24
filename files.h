@@ -14,6 +14,20 @@
 // try creating an array of array of lines instead of saving each array of lines
 // inside the opened_file struct
 
+// when no file name is given
+void startEmptyBuffer() {
+    editor_info.lines_amount = 1;
+    editor_info.active_line = 1;
+    editor_info.active_filename = (char*)"[blank]";
+    editor_info.buffer_type = EMPTY;
+
+    strcpy(editor_info.lines[0], "sdfasd");
+    
+    updateLinesPanel(1);
+    updateStatus();
+    wmove(code_panel.win, 0, 0);
+}
+
 // show lines with color
 void showLines() {
   int c = 0;

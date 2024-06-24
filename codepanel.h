@@ -11,8 +11,6 @@
 #include "statuspanel.h"
 #include "linespanel.h"
 
-// FIX: the two top lines go away after scrolling down and up!!!!!!!!!
-
 
 void cursorScrollDown() {
   int linepos = editor_info.active_line;
