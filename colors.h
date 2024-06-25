@@ -85,7 +85,7 @@ void printWithColor(char line[5000], WINDOW *win) {
     // detect words
     if (isalpha(line[charCount])) {
       int i = 0;
-      while (isalpha(line[charCount + i])) {
+      while (isalpha(line[charCount + i]) || line[charCount + i] == '_') {
         buff[i] = line[charCount+i];
         i++;
       }
