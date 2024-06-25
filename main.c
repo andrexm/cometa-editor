@@ -44,7 +44,7 @@ int main(int argv, char *argc[]) {
   basicColors();
 
   // open file or start a blank buffer
-  if (argc[1]) openFile(argc[1]);
+  if (argv >= 2) openFile(argc[1]);
   else startEmptyBuffer();
   
   while (1) {
