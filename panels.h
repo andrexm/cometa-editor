@@ -10,7 +10,6 @@
 // draw the lines panel
 void startLinesPanel() {
   WINDOW *lines = newwin(win_info.height, 7, 0, 0);
-  int start_at = 1;
   lines_panel.win = lines;
   lines_panel.height = win_info.height - 2;
   lines_panel.width = 7;

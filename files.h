@@ -59,7 +59,6 @@ void showLines() {
 bool openFile(char *filename) {
   int c = 0; // count lines
   FILE *fp;
-  char line[MAX_LINE_SIZE];
 
   if (!(fp = fopen(filename, "r+"))) fp = fopen(filename, "w+");
   

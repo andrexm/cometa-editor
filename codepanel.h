@@ -38,7 +38,6 @@ void cursorScrollDown() {
 void cursorScrollUp() {
   int linepos = editor_info.active_line;
   int c = 0; // line on code panel
-  int lines_qty = editor_info.lines_amount;
 
   // scroll until the code finish at the middle of the screen
   if ((editor_info.active_line - 1) <= 0) return;
@@ -126,7 +125,7 @@ void cursorOnBottomSide(WINDOW *win) {
 }
 
 // position the cursor at the top side
-void cursorOnTopSite(WINDOW *win) {
+void cursorOnTopSide() {
   // get the maximum position at right the cursor can go
   int new_x_pos = getLineLen(editor_info.active_line - 1);
   if (cursor.x < new_x_pos) new_x_pos = cursor.x;
@@ -135,7 +134,7 @@ void cursorOnTopSite(WINDOW *win) {
 }
 
 // position the cursor at the left side
-void cursorOnLeftSide(WINDOW *win) {
+void cursorOnLeftSide() {
   updateCursor(cursor.y, 0, code_panel.win);
 }
 
