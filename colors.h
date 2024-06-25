@@ -75,7 +75,7 @@ bool isSpecial(char c) {
 }
 
 void printWithColor(char line[5000], WINDOW *win) {
-  int charCount = 0;
+  size_t charCount = 0;
   char buff[50]; // temp keyword
   bool isComment = false;
   for (; charCount <= strlen(line); charCount++) {
