@@ -157,7 +157,6 @@ void cursorGoLastLine() {
     cursorScrollUp();
     updateCursor(code_panel.height - 1, 0, code_panel.win);
   } else {
-    editor_info.active_file = editor_info.lines_amount - 1;
     updateCursor(editor_info.lines_amount, 0, code_panel.win);
   }
 }
