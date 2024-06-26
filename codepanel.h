@@ -143,3 +143,16 @@ void cursorOnRightSide() {
   updateCursor(cursor.y, linelen, code_panel.win);
 }
 
+void cursorGoFirstLine() {
+  updateCursor(1, 0, code_panel.win);
+  editor_info.active_line = 2;
+  cursorScrollUp();
+  updateCursor(0, 0, code_panel.win);
+}
+
+void cursorGoLastLine() {
+  updateCursor(code_panel.height - 1, 0, code_panel.win);
+  editor_info.active_line = editor_info.lines_amount + 2 - code_panel.height;
+  cursorScrollUp();
+  updateCursor(code_panel.height - 1, 0, code_panel.win);
+}

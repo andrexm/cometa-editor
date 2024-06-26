@@ -63,6 +63,14 @@ bool goMoves(int c) {
     case KEY_RIGHT:
       cursorOnRightSide();
       return true;
+
+    case 'g': // go to first line
+      cursorGoFirstLine();
+      return true;
+
+    case 'e': // go to last line
+      cursorGoLastLine();
+      return true;
   }
   return false;
 }
