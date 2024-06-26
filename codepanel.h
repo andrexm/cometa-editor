@@ -151,8 +151,13 @@ void cursorGoFirstLine() {
 }
 
 void cursorGoLastLine() {
-  updateCursor(code_panel.height - 1, 0, code_panel.win);
-  editor_info.active_line = editor_info.lines_amount + 2 - code_panel.height;
-  cursorScrollUp();
-  updateCursor(code_panel.height - 1, 0, code_panel.win);
+  if (editor_info.lines_amount > code_panel.height) {
+    updateCursor(code_panel.height - 1, 0, code_panel.win);
+    editor_info.active_line = editor_info.lines_amount + 2 - code_panel.height;
+    cursorScrollUp();
+    updateCursor(code_panel.height - 1, 0, code_panel.win);
+  } else {
+    editor_info.active_file = editor_info.lines_amount - 1;
+    updateCursor(editor_info.lines_amount, 0, code_panel.win);
+  }
 }
