@@ -12,24 +12,24 @@ bool basicMoves(int c) {
   switch (c) {  
     case 'j': // move down
     case KEY_DOWN:
-      cursorMoveDown(code_panel.win);    
+      cursorMoveDown();    
       return true;
       break;
     case 'k': // move up
     case KEY_UP:
-      cursorMoveUp(code_panel.win);
+      cursorMoveUp();
       return true;
       break;
       
     case 'h': // move left
     case KEY_LEFT:
-      cursorMoveLeft(code_panel.win);
+      cursorMoveLeft();
       return true;
       break;
 
     case 'l': // move right
     case KEY_RIGHT:
-      cursorMoveRight(code_panel.win);
+      cursorMoveRight();
       return true;
       break;
   }
@@ -46,22 +46,22 @@ bool goMoves(int c) {
   switch (c) {
     case 'h': // start of line
     case KEY_LEFT:
-      cursorOnLeftSide(code_panel.win);
+      cursorOnLeftSide();
       return true;
 
     case 'j': // end of window
     case KEY_DOWN:
-      cursorOnBottomSide(code_panel.win);
+      cursorOnBottomSide();
       return true;
 
     case 'k': // start of window
     case KEY_UP:
-      cursorOnTopSide(code_panel.win);
+      cursorOnTopSide();
       return true;
 
     case 'l': // end of line
     case KEY_RIGHT:
-      cursorOnRightSide(code_panel.win);
+      cursorOnRightSide();
       return true;
   }
   return false;

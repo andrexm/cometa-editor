@@ -61,7 +61,7 @@ void cursorScrollLeft();
 
 void cursorGoTo();
 
-void cursorMoveUp(WINDOW *win) {
+void cursorMoveUp() {
   // nothing happens if the cursor is already on top
   if (cursor.y == 0) {
     cursorScrollUp();
@@ -74,11 +74,11 @@ void cursorMoveUp(WINDOW *win) {
   if (linelen < new_x_pos) new_x_pos = linelen;
 
   // update cursor to the above line
-  updateCursor(cursor.y - 1, new_x_pos, win);
+  updateCursor(cursor.y - 1, new_x_pos, code_panel.win);
 }
 
 // use linelen, if the x position on the new line is greater then the line length, move to its len
-void cursorMoveDown(WINDOW *win) {
+void cursorMoveDown() {
   // nothing happens at the end of the file
   if ((cursor.y > editor_info.lines_amount - editor_info.active_line)) return;
 
@@ -92,24 +92,24 @@ void cursorMoveDown(WINDOW *win) {
     cursorScrollDown();
     return;
   }
-  updateCursor(cursor.y + 1, new_x_pos, win);
+  updateCursor(cursor.y + 1, new_x_pos, code_panel.win);
 }
 
 // go to the right side of the current line
-void cursorMoveRight(WINDOW *win) {
+void cursorMoveRight() {
   int linelen = getLineLen(nextLineNumber() - 1);
   if ((cursor.x == code_panel.width - 2) || linelen < cursor.x + 1) return;
-  updateCursor(cursor.y, cursor.x + 1, win);
+  updateCursor(cursor.y, cursor.x + 1, code_panel.win);
 }
 
 // go to the left side of the current line
-void cursorMoveLeft(WINDOW *win) {
+void cursorMoveLeft() {
   if (cursor.x == 0) return;
-  updateCursor(cursor.y, cursor.x - 1, win);
+  updateCursor(cursor.y, cursor.x - 1, code_panel.win);
 }
 
 // position the cursor at the bottom or the last line
-void cursorOnBottomSide(WINDOW *win) {
+void cursorOnBottomSide() {
   if (cursor.y > editor_info.lines_amount - editor_info.active_line) return;
 
   // get the maximum position the cursor can go on the bottom
@@ -121,7 +121,7 @@ void cursorOnBottomSide(WINDOW *win) {
   if (cursor.x < new_x_pos) new_x_pos = cursor.x;
 
   // then go down
-  updateCursor(pos, new_x_pos, win);
+  updateCursor(pos, new_x_pos, code_panel.win);
 }
 
 // position the cursor at the top side
@@ -138,8 +138,8 @@ void cursorOnLeftSide() {
   updateCursor(cursor.y, 0, code_panel.win);
 }
 
-void cursorOnRightSide(WINDOW *win) {
+void cursorOnRightSide() {
   int linelen = getLineLen(nextLineNumber() - 1);
-  updateCursor(cursor.y, linelen, win);
+  updateCursor(cursor.y, linelen, code_panel.win);
 }
 
