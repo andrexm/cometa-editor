@@ -32,6 +32,14 @@ bool basicMoves(int c) {
       cursorMoveRight();
       return true;
       break;
+
+    case KEY_NPAGE:
+      scrollWindowDown();
+      return true;
+
+    case KEY_PPAGE:
+      scrollWindowUp();
+      return true;
   }
   return false;
 }

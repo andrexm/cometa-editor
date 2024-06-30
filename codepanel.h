@@ -160,3 +160,25 @@ void cursorGoLastLine() {
     updateCursor(editor_info.lines_amount, 0, code_panel.win);
   }
 }
+
+// when pressing 'page down' key
+void scrollWindowDown() {
+  if (editor_info.active_line + code_panel.height > editor_info.lines_amount) return;
+
+  editor_info.active_line += code_panel.height;
+  cursorScrollUp();
+}
+
+// when pressing 'page up' key
+void scrollWindowUp() {
+  if (editor_info.active_line == 1) return;
+
+  if (editor_info.active_line - code_panel.height <= 0) {
+    editor_info.active_line = 2;
+    cursorScrollUp();
+    return;
+  }
+
+  editor_info.active_line -= code_panel.height;
+  cursorScrollUp();
+}
