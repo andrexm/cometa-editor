@@ -1,4 +1,10 @@
-# Cometa Editor
+<h1 align="center">Cometa Editor</h1>
+
+<p align="center">A simple and cool text editor.</p>
+
+![Screenshot](./screenshot-cometa.jpg)
+
+## Cometa Editor
 Cometa is a simple text editor that works inside your terminal.
 It is heavily inspired by Vim and Helix, extending their keybinds and a similar look.
 For now, it can only open files and view their content, also a very basic (but cool)
