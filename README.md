@@ -16,7 +16,7 @@ Clone this repository and then, on the project folder, run the _make_ command on
 ```
   make
 ```
-It will produce a _editor_ inside that folder.
+It will produce an executable called _cometa_ inside that folder.
 __Note__: the app is still on its early stage, you can only view text files and navigate through them.
 
 ## Usage
