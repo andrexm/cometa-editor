@@ -22,4 +22,30 @@ You can it like any other terminal-based text editor:
 
 ## Keymap
 
+### Movement
+
+| Key                           | Description      |
+| ----------------------------- | ---------------- |
+| <kbd>h</kbd>, <kbd>Left</kbd> |  Move left       |
+| <kbd>j</kbd>, <kbd>Down</kbd> |  Move down       |
+| <kbd>k</kbd>, <kbd>Up</kbd>   |  Move up         |
+| <kbd>l</kbd>, <kbd>Right</kbd>|  Move right      |
+| <kbd>Home</kbd>               |  Move to the start of the line       |
+| <kbd>End</kbd>                |  Move to the end of the line         |
+| <kbd>PageUp</kbd>             |  Move page up                        |
+| <kbd>PageDown</kbd>           |  Move page down                      |
+
+### Goto mode
+
+Accessed by typing <kbd>g</kbd> in __normal mode__.
+
+| Key                           | Description      |
+| ----------------------------- | ---------------- |
+| <kbd>h</kbd>, <kbd>Left</kbd> |  Go to the start of the line         |
+| <kbd>j</kbd>, <kbd>Down</kbd> |  Go to the bottom of the screen      |
+| <kbd>k</kbd>, <kbd>Up</kbd>   |  Go to the top of the screen         |
+| <kbd>l</kbd>, <kbd>Right</kbd>|  Go to the end of the line           |
+| <kbd>g</kbd>                  |  Go to the start of the file         |
+| <kbd>e</kbd>                  |  Go to the end of the file           |
+
 ## License
