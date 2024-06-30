@@ -40,6 +40,14 @@ bool basicMoves(int c) {
     case KEY_PPAGE:
       scrollWindowUp();
       return true;
+
+    case KEY_HOME:
+      cursorOnLeftSide();
+      return true;
+
+    case KEY_END:
+      cursorOnRightSide();
+      return true;
   }
   return false;
 }
