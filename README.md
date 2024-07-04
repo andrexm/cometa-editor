@@ -20,11 +20,12 @@ It will produce an executable called _cometa_ inside that folder.
 __Note__: the app is still on its early stage, you can only view text files and navigate through them.
 
 ## Usage
-You can it like any other terminal-based text editor:
+You can use it like any other terminal-based text editor:
 ```shell
   ./editor file.txt
   ./editor
 ```
+To close the program, just type <kbd>Ctrl</kbd> + <kbd>Q</kbd>.
 
 ## Keymap
 
