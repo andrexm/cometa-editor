@@ -30,6 +30,14 @@ int nextLineNumber() {
   return cursor.y + editor_info.active_line;
 }
 
+bool endOfLine(int linelen) {
+  return (cursor.x == code_panel.width - 2) || linelen < cursor.x + 1;
+}
+
+bool endOfFile() {
+  return (editor_info.active_line + cursor.y - 1) >= editor_info.lines_amount;
+}
+
 // when no file name is given
 void startEmptyBuffer() {
     editor_info.lines_amount = 1;

@@ -13,14 +13,6 @@
 #include "files.h"
 
 
-bool endOfLine(int linelen) {
-  return (cursor.x == code_panel.width - 2) || linelen < cursor.x + 1;
-}
-
-bool endOfFile() {
-  return (editor_info.active_line + cursor.y - 1) >= editor_info.lines_amount;
-}
-
 void cursorScrollDown() {
   int linepos = editor_info.active_line;
   int c = 0; // line on code panel
@@ -132,7 +124,16 @@ void cursorMoveRight() {
 
 // go to the left side of the current line
 void cursorMoveLeft() {
-  if (cursor.x == 0) return;
+  if (cursor.y == 0 && cursor.x == 0) return;
+
+  // go a line up if the cursor is at the start of the line
+  if (cursor.y > 0 && cursor.x == 0) {
+    cursorMoveUp();
+    updateCursor(cursor.y, getLineLen(nextLineNumber() - 1), code_panel.win);
+    return;
+  }
+  
+  // move cursor left
   updateCursor(cursor.y, cursor.x - 1, code_panel.win);
 }
 
