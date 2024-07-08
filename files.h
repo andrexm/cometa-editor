@@ -28,10 +28,12 @@ int nextLineNumber() {
   return cursor.y + editor_info.active_line;
 }
 
+// is the given value at the end of the current line of the file?
 bool endOfLine(int linelen) {
   return (cursor.x == code_panel.width - 2) || linelen < cursor.x + 1;
 }
 
+// is the given value at the end of the current file?
 bool endOfFile() {
   return (editor_info.active_line + cursor.y - 1) >= editor_info.lines_amount;
 }
