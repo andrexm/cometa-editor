@@ -3,16 +3,14 @@
 #include <stdio.h>
 #include <ncurses.h>
 #include <string.h>
+#include <unistd.h>
 
 #include "config.h"
 #include "colors.h"
 #include "cursor.h"
+#include "errors.h"
 #include "statuspanel.h"
 #include "linespanel.h"
-
-// TODO:
-// try creating an array of array of lines instead of saving each array of lines
-// inside the opened_file struct
 
 // return the length of a given line in the file
 int getLineLen(int line) {
@@ -68,8 +66,16 @@ bool openFile(char *filename) {
   int c = 0; // count lines
   FILE *fp;
 
-  if (!(fp = fopen(filename, "r+"))) fp = fopen(filename, "w+");
-  
+  // open file if it exists
+  if (access(filename, F_OK) != -1) fp = fopen(filename, "r+");
+  // create file if it don't exists
+  if (access(filename, F_OK) == -1) fp = fopen(filename, "w+");
+  // show an error message if both operations don't work
+  if (!fp) {
+    die("Error while opening/creating file");
+    return false;
+  }
+
   // setting basic file data
   editor_info.active_filename = filename;
   editor_info.lines_amount= 0;
