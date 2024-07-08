@@ -2,15 +2,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "codepanel.h"
 #include "config.h"
 #include "colors.h"
-#include "cursor.h"
 #include "files.h"
-#include "linespanel.h"
 #include "panels.h"
 #include "movement.h"
-#include "statuspanel.h"
 
 // exit the program when an error is found
 void die(char *msg) {
