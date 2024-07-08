@@ -8,11 +8,6 @@
 #include "panels.h"
 #include "movement.h"
 
-// exit the program when an error is found
-void die(char *msg) {
-  perror(msg);
-  exit(1);
-}
 
 void initEditor() {
   initscr();
