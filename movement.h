@@ -35,10 +35,16 @@ bool basicMoves(int c) {
 
     case KEY_NPAGE:
       scrollWindowDown();
+      // the next 2 lines: move cursor to the end of that line if necessary
+      cursorMoveRight();
+      cursorMoveLeft();
       return true;
 
     case KEY_PPAGE:
       scrollWindowUp();
+      // the next 2 lines: move cursor to the end of that line if necessary
+      cursorMoveRight();
+      cursorMoveLeft();
       return true;
 
     case KEY_HOME:
