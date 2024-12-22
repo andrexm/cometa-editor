@@ -28,7 +28,7 @@ bool startStr = false;
 bool isMultilineComment = false; // TODO: implement detection of multiline comments
 
 struct symbol {
-  char text[50];
+  char text[5000];
   int color_code;
 } symbol;
 
@@ -79,30 +79,45 @@ bool isSpecial(char c) {
   return false;
 }
 
-// the next symbol to be printed, eg: keyword, comment, function call, ...
+/*
+ * the next symbol to be printed, eg: keyword, comment, function call, ...
+ * return the number of characters read
+*/
 int findNextSymbol(size_t charPosition, char *line) {
+  //find comments
+  if (line[charPosition] == '/' && line[charPosition + 1] == '/') {
+    int i = 0;
+    while (line[charPosition + i] != '\0') {
+      symbol.text[i] = line[charPosition + i];
+      i++;
+    }
+    symbol.text[charPosition + i] = '\0';
+    symbol.color_code = 7;
+    return i;
+  }
+  
   // find specia character
   if (isSpecial(line[charPosition])) {
     symbol.text[0] = line[charPosition];
     symbol.text[1] = '\0';
     symbol.color_code = 9;
-    return 0;
+    return 1;
   }
 
   // nothing special, return basic text
   symbol.text[0] = line[charPosition];
   symbol.text[1] = '\0';
   symbol.color_code = 1;
-  return 0;
+  return 1;
 }
 
 void printWithColor(char line[5000], WINDOW *win) {
   size_t charPosition = 0;
   char buff[50]; // temp keyword
 
-  for (; charPosition <= strlen(line); charPosition++) {
+  for (; charPosition <= strlen(line);) {
     // get the next symbol to the symbol global variable
-    findNextSymbol(charPosition, line);
+    charPosition = charPosition + findNextSymbol(charPosition, line);
 
     // print the text with its color
     wattron(win, COLOR_PAIR(symbol.color_code));
