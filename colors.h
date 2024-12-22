@@ -27,6 +27,11 @@ int selectedColor = 1;
 bool startStr = false;
 bool isMultilineComment = false; // TODO: implement detection of multiline comments
 
+struct symbol {
+  char text[50];
+  int color_code;
+} symbol;
+
 // basic colors for all panels
 void basicColors() {
   if (!has_colors()) return;
@@ -74,11 +79,48 @@ bool isSpecial(char c) {
   return false;
 }
 
+// the next symbol to be printed, eg: keyword, comment, function call, ...
+int findNextSymbol(size_t charPosition, char *line) {
+  // find specia character
+  if (isSpecial(line[charPosition])) {
+    symbol.text[0] = line[charPosition];
+    symbol.text[1] = '\0';
+    symbol.color_code = 9;
+    return 0;
+  }
+
+  // nothing special, return basic text
+  symbol.text[0] = line[charPosition];
+  symbol.text[1] = '\0';
+  symbol.color_code = 1;
+  return 0;
+}
+
 void printWithColor(char line[5000], WINDOW *win) {
+  size_t charPosition = 0;
+  char buff[50]; // temp keyword
+
+  for (; charPosition <= strlen(line); charPosition++) {
+    // get the next symbol to the symbol global variable
+    findNextSymbol(charPosition, line);
+
+    // print the text with its color
+    wattron(win, COLOR_PAIR(symbol.color_code));
+    wprintw(win, "%s", symbol.text);
+    wattroff(win, COLOR_PAIR(symbol.color_code));
+  }
+}
+
+/*void printWithColor(char line[5000], WINDOW *win) {
   size_t charCount = 0;
   char buff[50]; // temp keyword
   bool isComment = false;
   for (; charCount <= strlen(line); charCount++) {
+    wprintw(win, "%c", line[charCount]);
+    continue; // skip below code
+
+    // TODO: fix code below - given segmentation fault! -----------------------------------------------
+
     // start a comment
     if (line[charCount] == '/' && line[charCount + 1] == '/') isComment = true;
     
@@ -165,4 +207,4 @@ void printWithColor(char line[5000], WINDOW *win) {
   }
   selectedColor = 1;
 }
-
+*/
