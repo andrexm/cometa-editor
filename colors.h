@@ -17,12 +17,6 @@
 #define COLOR_GRAY2 16
 #define COLOR_BLACK3 17
 
-const char *KEYWORDS[] = {"while", "volatile", "void", "unsigned", "union", "typedef", "switch",
-                          "struct", "static", "sizeof", "signed", "short", "return", "register",
-                          "long", "if", "goto", "for", "float", "extern", "enum", "else", "double",
-                          "do", "continue", "const", "case", "break", "auto", "int", "void", "char",
-                          "include", "while", "for", "if", "else", "return"};
-
 int selectedColor = 1;
 bool startStr = false;
 bool isMultilineComment = false; // TODO: implement detection of multiline comments
@@ -70,7 +64,7 @@ void basicColors() {
 }
 
 bool isSpecial(char c) {
-  char specials[] = {'(', ')', '{', '}', ',', '.', '[', ']', ';', '?', '|'};
+  char specials[] = {'(', ')', '{', '}', ',', '.', '[', ']', ';', '?', '|', '<', '>', '!', '?', '&', '=', '#'};
   int i = 0;
   while (specials[i]) {
     if (specials[i] == c) return true;
@@ -79,10 +73,8 @@ bool isSpecial(char c) {
   return false;
 }
 
-/*
- * the next symbol to be printed, eg: keyword, comment, function call, ...
- * return the number of characters read
-*/
+// the next symbol to be printed, eg: keyword, comment, function call, ...
+//return the number of characters read
 int findNextSymbol(size_t charPosition, char *line) {
   //find comments
   if (line[charPosition] == '/' && line[charPosition + 1] == '/') {
@@ -96,11 +88,93 @@ int findNextSymbol(size_t charPosition, char *line) {
     return i;
   }
   
-  // find specia character
+  // find special character
   if (isSpecial(line[charPosition])) {
     symbol.text[0] = line[charPosition];
     symbol.text[1] = '\0';
     symbol.color_code = 9;
+    return 1;
+  }
+
+  // find strings
+  if (line[charPosition] == '"') {
+    int i = 1;
+    char find = line[charPosition];
+
+    symbol.text[0] = line[charPosition];
+    while (line[charPosition + i] && line[charPosition + i] != find) {
+      if (line[charPosition + i + 1] == '\0') {
+        symbol.text[1] = '\0';
+        symbol.color_code = 1;
+        return 1;
+      }
+      symbol.text[i] = line[charPosition + i];
+      i++;
+    }
+    symbol.text[i] = line[charPosition + i];
+    symbol.text[i + 1] = '\0';
+    symbol.color_code = 5;
+    return i + 1;
+  }
+  // end find strings
+
+  // find single quotes strings
+  if (line[charPosition] == '\'') {
+    int i = 1;
+    char find = line[charPosition];
+
+    symbol.text[0] = line[charPosition];
+    while (line[charPosition + i] && line[charPosition + i] != find && line[charPosition] != '\\') {
+      if (line[charPosition + i + 1] == '\0') {
+        symbol.text[1] = '\0';
+        symbol.color_code = 1;
+        return 1;
+      }
+      symbol.text[i] = line[charPosition + i];
+      i++;
+    }
+    symbol.text[i] = line[charPosition + i];
+    symbol.text[i + 1] = '\0';
+    symbol.color_code = 5;
+    return i + 1;
+  }
+  // end find single quotes strings
+
+  // find names
+  if (isalpha(line[charPosition])) {
+    int i = 0;
+    //char buff[50];
+    
+    // save the word in symbol.text
+    while (isalpha(line[charPosition + i]) || isdigit(line[charPosition + i]) || line[charPosition + i] == '_') {
+      symbol.text[i] = line[charPosition + i]; // FIX: the error should be here
+      i++;
+    }
+    symbol.text[i] = '\0';
+    symbol.color_code = 3; // default color
+
+    // the word is a function
+    if (line[charPosition + i] == '(' || (line[charPosition + i + 1] == '(' && line[charPosition + i] == ' ')) symbol.color_code = 8;
+
+    // the word is a property or method of a struct
+    if (line[charPosition - 1] == '.') symbol.color_code = 3;
+
+    // the word is inside a <>
+    if (line[charPosition - 1] == '<') symbol.color_code = 3;
+
+    // print it white when struct, array or there is a word before it
+    if ((isalpha(line[charPosition - 2]) && line[charPosition - 1] == ' ' && line[charPosition + i] != '(') || line[charPosition + i] == '[') symbol.color_code = 1;
+    if (line[charPosition + i] == '.' && line[charPosition - 1] != '<') symbol.color_code = 1;
+
+    return i;
+  }
+  // end find names
+
+  // is number
+  if (isdigit(line[charPosition])) {
+    symbol.text[0] = line[charPosition];
+    symbol.text[1] = '\0';
+    symbol.color_code = 4;
     return 1;
   }
 
@@ -113,7 +187,6 @@ int findNextSymbol(size_t charPosition, char *line) {
 
 void printWithColor(char line[5000], WINDOW *win) {
   size_t charPosition = 0;
-  char buff[50]; // temp keyword
 
   for (; charPosition <= strlen(line);) {
     // get the next symbol to the symbol global variable
@@ -125,101 +198,3 @@ void printWithColor(char line[5000], WINDOW *win) {
     wattroff(win, COLOR_PAIR(symbol.color_code));
   }
 }
-
-/*void printWithColor(char line[5000], WINDOW *win) {
-  size_t charCount = 0;
-  char buff[50]; // temp keyword
-  bool isComment = false;
-  for (; charCount <= strlen(line); charCount++) {
-    wprintw(win, "%c", line[charCount]);
-    continue; // skip below code
-
-    // TODO: fix code below - given segmentation fault! -----------------------------------------------
-
-    // start a comment
-    if (line[charCount] == '/' && line[charCount + 1] == '/') isComment = true;
-    
-    // detect words
-    if (isalpha(line[charCount])) {
-      int i = 0;
-      while (isalpha(line[charCount + i]) || line[charCount + i] == '_') {
-        buff[i] = line[charCount+i];
-        i++;
-      }
-
-      buff[i] = '\0';
-      charCount = charCount + i;
-
-      // start color for functions
-      if (line[charCount] == '(') {
-        selectedColor = 8;
-      }
-
-      i = 0;
-      bool found = false;
-      while (KEYWORDS[i]) {
-        if (strcmp(KEYWORDS[i], buff) == 0 && selectedColor == 1 && !isComment) {
-          wattron(win, COLOR_PAIR(3));
-          wprintw(win, "%s", buff);
-          wattroff(win, COLOR_PAIR(3));
-          found = true;
-          break;
-        }
-        i++;
-      }
-      if (!found) {
-        if (isComment) selectedColor = 7;
-        wattron(win, COLOR_PAIR(selectedColor));  
-        wprintw(win, "%s", buff);
-        wattroff(win, COLOR_PAIR(selectedColor));
-      }
-    }
-      // end color for functions
-      if (line[charCount] == '(') {
-        selectedColor = 1;
-      }
-
-    if ((isdigit(line[charCount]) || line[charCount] == '!') && selectedColor == 1 && !isComment) {
-      wattron(win, COLOR_PAIR(4));
-      wprintw(win, "%c", line[charCount]);
-      wattroff(win, COLOR_PAIR(4));
-      continue;
-    }
-
-    // create functions to split into words and to split between keys (e.g., < and >)
-    // split between symbols (e.g., "")
-    if (line[charCount] == '"' && startStr == false && !isComment) {
-      startStr = true;
-      selectedColor = 5;
-    } else if (line[charCount] == '"' && startStr == true && !isComment) {
-      startStr = false;
-      wattron(win, COLOR_PAIR(selectedColor));
-      wprintw(win, "%c", line[charCount]);
-      wattroff(win, COLOR_PAIR(selectedColor));
-      selectedColor = 1;
-      continue;
-    }
-
-    // print line as comment
-    if (line[charCount] == '/' && line[charCount+1] == '/') {
-      isComment = true;
-      selectedColor = 7;
-    }
-
-    // print line with color 3
-    if (line[charCount] == '#' && !isComment) selectedColor = 3;
-
-    if (isSpecial(line[charCount]) && !isComment) {
-      wattron(win, COLOR_PAIR(9));
-      wprintw(win, "%c", line[charCount]);
-      wattroff(win, COLOR_PAIR(9));
-      continue;
-    }
-
-    wattron(win, COLOR_PAIR(selectedColor));
-    wprintw(win, "%c", line[charCount]);
-    wattroff(win, COLOR_PAIR(selectedColor));
-  }
-  selectedColor = 1;
-}
-*/
